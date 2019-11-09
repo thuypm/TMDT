@@ -16,11 +16,7 @@ public class userModel {
     
  public UserData getUser(String username)
     {
-        UserData user = new userDAO().getUser(username);
-        if(user == null)
-            return null;
-        else
-            return user;
+       return new userDAO().getUser(username);
      
     }
     public UserData checkUser(String username, String password)
@@ -34,10 +30,13 @@ public class userModel {
             else 
             return  null;
     }
-    public UserData addUser(UserData  userForm)
+    public Boolean addUser(UserData  userForm)
             {
-                UserData user = new userDAO().addUser(userForm);
-     return null;
+              int update = new userDAO().addUser(userForm);
+              if(update == 0)
+                       return false;
+             else
+                  return true;
                 
             }
 }

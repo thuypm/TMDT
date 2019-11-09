@@ -3,6 +3,7 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>  
+
         <servlet>
             <servlet-name>signin</servlet-name>
             <servlet-class>TMDT.controller.signin</servlet-class>
@@ -11,6 +12,10 @@
             <servlet-name>signup</servlet-name>
             <servlet-class>TMDT.controller.signup</servlet-class>
         </servlet>
+
+
+      
+
         <servlet-mapping>
             <servlet-name>signin</servlet-name>
             <url-pattern>/signin</url-pattern>

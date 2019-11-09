@@ -23,9 +23,10 @@ public class userDAO {
     
         connectDB conn = new connectDB();
         Statement stmt = conn.getConnect();
-       UserData user = new UserData();
+   
       public UserData getUser(String username)
       {
+              UserData user = new UserData();
          
           try{
               ResultSet rs  = stmt.executeQuery("SELECT * FROM [user] WHERE (username = '" + username +"')"  );
@@ -36,38 +37,31 @@ public class userDAO {
                    user.setPassword(rs.getString("password").replaceAll(" ", ""));
                    user.setAdmin(rs.getBoolean("admin"));
                    user.setAdress(rs.getString("adress"));
+                   user.setPhone(rs.getString("phone"));
+              
               }
               else
                   user = null;
                   }
              catch(Exception e){
                  System.out.println(e);
-                 
              };
-             System.out.println(user.getUsername());
+             
              return user;
                
 };
-      public UserData addUser( UserData userForm)
+      public int addUser( UserData userForm)
       {
           try{
-              ResultSet rs  = stmt.executeQuery("INSERT INTO user ( )");
-              if(rs.next())
-              {
-                  user.setUserID(rs.getString("userID"));
-                   user.setUsername(rs.getString("username").replaceAll(" ", ""));
-                   user.setPassword(rs.getString("password").replaceAll(" ", ""));
-                   user.setAdmin(rs.getBoolean("admin"));
-                   user.setAdress(rs.getString("adress"));
-              }
-              else
-                  user = null;
-                  }
+              int rs  = stmt.executeUpdate("INSERT INTO [user] (username,password,admin,adress,phone ) VALUES('"
+       +userForm.getUsername() +"','"  +userForm.getPassword()+"','0','" +userForm.getAdress()+"','" +userForm.getPhone()+"')");
+             return rs;
+          }
              catch(Exception e){
                  System.out.println(e);
-                 
-             };
-             return user;
+                 return 0;
+             }
+            
       }
  
 }

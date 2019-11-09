@@ -317,28 +317,36 @@
 								<div class="personal-info-content">
 								
 									<div class="form-group primary-form-group p-info-group">
-										<label for="firstname">Username <sup>*</sup></label>
+										<label for="username">Username <sup>*</sup></label>
 										<input type="text" value=""  name="username" v-model="formSignup.username" class="form-control input-feild">
 									</div>
 									<div class="form-group primary-form-group p-info-group">
-										<label for="lastname">Name <sup>*</sup></label>
+										<label for="name">Name <sup>*</sup></label>
 										<input type="text" value=""  name="name" v-model="formSignup.name" class="form-control input-feild">
 									</div>
 									<div class="form-group primary-form-group p-info-group">
-										<label for="email">Password<sup>*</sup></label>
-										<input type="email" value=""  name="password" v-model="formSignup.password" class="form-control input-feild">
+										<label for="password">Password<sup>*</sup></label>
+										<input type="password" value=""  name="password" v-model="formSignup.password" class="form-control input-feild">
 									</div>
 									<div class="form-group primary-form-group p-info-group">
 										<label for="password">Retype Password <sup>*</sup></label>
 										<input type="password" value=""  name="rePassword" v-model="formSignup.rePassword" class="form-control input-feild">
 										<span class="min-pass">(Five characters minimum)</span>
 									</div>
+                                                                    <div class="form-group primary-form-group p-info-group">
+										<label for="email">Adress<sup>*</sup></label>
+										<input type="email" value=""  name="password" v-model="formSignup.adress" class="form-control input-feild">
+									</div>
+                                                                    <div class="form-group primary-form-group p-info-group">
+										<label for="email">Phone<sup>*</sup></label>
+										<input type="email" value=""  name="password" v-model="formSignup.phone" class="form-control input-feild">
+									</div>
 									<strong> <div class="alert alert-danger"  style="display: none;     max-width: 270px;" v-show="errorSignup == true">{{messErrSignup}}</div></strong>
                  
 							
 								
 									<div class="submit-button p-info-submit-button">
-										<a  v-on:click ="signup" id="SubmitCreate" class="btn main-btn">
+										<a  v-on:click ="signup" class="btn main-btn">
 											<span>
 												Register
 												<i class="fa fa-chevron-right"></i>
@@ -579,22 +587,20 @@
 		<%@ include file = "footer.jsp" %>
         <script>
     var app = new Vue({
-        el: '.container',
+        el: '.main-content-section',
         data: {
             errorSignup: false,
             errorSignin: false,
             messErrSignin: '',
             messErrSignup: '',
-
-      formSignin:{
-          username: '',
-          password: ''
-                 },
+  
       formSignup: {
         username: '',
         password: '',
         name: '',
         rePassword: '',
+        phone: '',
+        adress: ''
       }
 
         },
@@ -609,7 +615,6 @@
      if(this.formSignup.password.length < 5 ) 
      { 
        this.messErrSignup= 'password tối thiểu 5 ký tự';
-       console.log(this.formSignup.password)
         this.errorSignup = true;
      return false 
      }
@@ -628,11 +633,15 @@
      return false ;
      };
     axios.post('/signup', {
-        username: this.formData.username,
-        password: this.formData.password,
-        name: this.formData.name,
+        username: this.formSignup.username,
+        password: this.formSignup.password,
+        name: this.formSignup.name,
+        phone: this.formSignup.phone,
+        adress: this.formSignup.adress
+        
     }).then((res)=>{
-       if(res.data == '0')
+        console.log(res.data);
+       if(!res.data)
        {
          this.messErrSignup ='Username đã được sử dụng';
              this.errorSignup = true;
@@ -641,7 +650,7 @@
             this.errorSignup = false;
          alert('đăng ký thành công, bây giờ hãy đăng nhập');
       
-          this.$router.push('/signin'); 
+          location.replace("/signin")
        }
     })
     

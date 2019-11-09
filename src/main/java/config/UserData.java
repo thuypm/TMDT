@@ -16,6 +16,15 @@ public class UserData {
     String name;
     String adress;
     Boolean admin;
+    String phone;
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 
     public void setUsername(String username) {
         this.username = username;

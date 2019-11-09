@@ -316,7 +316,7 @@
 								<div class="form-content">
 								
 									<div class="submit-button">
-										<a href="checkout-registration.html" id="SubmitCreate" class="btn main-btn">
+										<a href="/signup" id="SubmitCreate" class="btn main-btn">
 											<span>
 												<i class="fa fa-user submit-icon"></i>
 												Create an account
@@ -619,13 +619,16 @@
 		 axios.post('/signin', this.formSignin).then((res)=>{
 			if(!res.data)
 			{
-			  this.messErr ='Tên tài khoản hoặc mật khẩu không đúng';
+			  this.messErrSignin ='Tên tài khoản hoặc mật khẩu không đúng';
 				  this.errorSignin = true;
-				  return false 
+				  return false ;
 			}else
-			{
-				this.errorSignin = false;
-				alert("đăng nhập thành công");
+			{   
+                            this.errorSignin = false;
+                            if(res.data.admin)
+                                location.replace("/admin/")
+                            else
+                                window.location.href = "/"
 			}
 		 })
 		 },

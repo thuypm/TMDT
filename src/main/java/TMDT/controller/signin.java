@@ -38,10 +38,14 @@ public class signin extends HttpServlet {
  HttpSession httpSession = request.getSession();
  Object obj = httpSession.getAttribute("user");
  if(obj == null)
-               dispatcher= request.getRequestDispatcher("/signin.jsp");
- else dispatcher = request.getRequestDispatcher("/index.jsp");
-                     if (dispatcher != null)
-                        dispatcher.forward(request, response);
+ {
+     dispatcher= request.getRequestDispatcher("/signin.jsp");
+      if (dispatcher != null)
+            dispatcher.forward(request, response);
+ }
+ else
+     response.sendRedirect("/");
+                    
     }
 
     /**
@@ -67,8 +71,9 @@ UserData  user = new userModel().checkUser(userDataCLi.username, userDataCLi.pas
  PrintWriter out = response.getWriter();
 if(user != null)
 {
-   session.setAttribute("user", gson.toJson(user));
-   out.print(user.getUsername());
+    String res = gson.toJson(user);
+   session.setAttribute("user", res);
+   out.print(res);
 }
 else
     out.print(false);

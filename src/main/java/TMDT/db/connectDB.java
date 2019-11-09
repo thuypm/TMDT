@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author MINH THUY
@@ -20,27 +22,34 @@ import java.sql.SQLException;
 
 public class connectDB {
  private  Statement stmt ;
-    public connectDB() {
+ 
+
+//    public connectDB() {
+//        
+//    
+//    }
+    
+   
+   public Statement getConnect() {
+       
           try {
-      
-  String dbURL = "jdbc:sqlserver://localhost;databaseName=tmdt;user=sa;password=kochodau";
+              try {
+                  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+              } catch (ClassNotFoundException ex) {
+                  Logger.getLogger(connectDB.class.getName()).log(Level.SEVERE, null, ex);
+              }
+     String dbURL = "jdbc:sqlserver://localhost;databaseName=tmdt;user=sa;password=kochodau";
     Connection conn  = DriverManager.getConnection(dbURL);
     if (conn != null) {
-    System.out.println("Connected");
     this.stmt = conn.createStatement();
 }
-      
+    else
+      conn  = DriverManager.getConnection(dbURL);
    }
   catch (SQLException ex) {
      System.err.println("Cannot connect database, " + ex);
     this.stmt = null;
    };
-    
-    }
-    
-   
-   public Statement getConnect(){
-        
     return this.stmt;
   }
 //    public static void main(String[] args) {

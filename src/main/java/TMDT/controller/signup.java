@@ -54,11 +54,16 @@ public class signup extends HttpServlet {
             RequestDispatcher dispatcher;
             HttpSession httpSession = request.getSession();
             Object obj = httpSession.getAttribute("user");
-            if(obj == null)
-                          dispatcher= request.getRequestDispatcher("/signup.jsp");
-            else dispatcher = request.getRequestDispatcher("/index.jsp");
-                                if (dispatcher != null)
-                                   dispatcher.forward(request, response);
+           if(obj == null)
+ {
+     dispatcher= request.getRequestDispatcher("/signup.jsp");
+      if (dispatcher != null)
+            dispatcher.forward(request, response);
+ }
+ else
+     response.sendRedirect("/");
+                    
+    
     }
 
     /**
@@ -76,18 +81,20 @@ public class signup extends HttpServlet {
  String userData = new readJson(request, response).readDataJson();
 Gson gson = new Gson();
 UserData userDataCLi = gson.fromJson(userData, UserData.class);
-HttpSession session = request.getSession();
 userModel usr = new userModel();
 UserData  user = usr.getUser(userDataCLi.getUsername());
  response.setContentType("application/json");
  response.setCharacterEncoding("UTF-8");
  PrintWriter out = response.getWriter();
-//if(user != null)
-//   out.print(false);
-//else
-//{
-//    usr.addUser(user)
-//}
+if(user != null)
+{      
+    System.err.println(user.getUsername());
+        out.print(false);
+}
+else
+{
+    out.print(usr.addUser(userDataCLi));
+}
    }
 
     /**
